@@ -1,0 +1,58 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const { date } = Astro.params;
+---
+
+<Layout title="Event timer.">
+    <div class="p-8">
+        <div class="shadow p-2 text-center bg-white">
+            <h1 class="text-4xl">Event timer</h1>
+            <p
+                class="text-4xl text-slate-600"
+                id="countdown"
+                data-time-until={date}>
+                Loading..
+            </p>
+        </div>
+    </div>
+</Layout>
+
+<script>
+    import { intervalToDuration } from "date-fns";
+
+    // grab the countdown element
+    const countdown = document.getElementById("countdown");
+    if (!countdown) throw new Error("Countdown element not found.");
+
+    // pull the date off the element
+    const eventParam: string | null = countdown.getAttribute("data-time-until");
+    if (!eventParam) throw new Error("No event date provided.");
+
+    // start the countdowm
+    const eventDate = new Date(eventParam).getTime();
+    setInterval(() => {
+        const now = new Date().getTime();
+        const distance = eventDate - now;
+        const {
+            days, hours, minutes, seconds, years, months
+        } = intervalToDuration({
+            start: 0 , end: distance
+        });
+        if (countdown === null) return;
+        const timePeriods = [years, months, days, hours, minutes, seconds];
+        countdown.innerText = [
+            { count: years, label: "year" },
+            { count: months, label: "month" },
+            { count: days, label: "day" },
+            { count: hours, label: "hour" },
+            { count: minutes, label: "minute" },
+            { count: seconds, label: "second" }
+        ].map((unit, index) => {
+            if (unit.count === undefined) return;
+    
+            return `${unit.count} ${unit.label}${unit.count > 1 ? "s" : ""}${timePeriods.length === index + 1 ? "" : ", "}`;
+        }).join("");
+    }, 1000);
+</script>
+    

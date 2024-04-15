@@ -1,4 +1,6 @@
 ---
+import Navigation from "../components/Navigation.astro";
+
 interface Props {
 	title: string;
 }
@@ -17,7 +19,21 @@ const { title } = Astro.props;
         <title>{title}</title>
     </head>
     <body class="h-full">
-        <slot />
+        <div class="flex flex-col h-full">
+            <Navigation />
+            <div class="flex-1 overflow-hidden">
+                <div class="flex h-full">
+                    <div class="w-48 bg-slate-600">
+                    </div>
+                    <div class="flex-1 overflow-y-auto bg-slate-100">
+                        <slot />
+                    </div>
+                </div>
+            </div>
+            <footer class="bg-slate-400">
+                <p class="text-center text-xs py-2 text-white">Built by <a class="hover:text-cyan-200 transition-colors" href="https://github.com/dayvidwhy">dayvidwhy</a></p>
+            </footer>
+        </div>
     </body>
 </html>
 <style is:global>
