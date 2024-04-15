@@ -1,12 +1,48 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Card from "../components/Card.astro";
 ---
 
 <Layout title="Event timer.">
-    <Card
-        title="Test"
-        description="This is a test card."
-    />
+    <div class="flex flex-col h-full">
+        <nav class="w-full bg-slate-300">
+            <ul class="w-48 flex bg-slate-800">
+                <li class="w-full text-center">
+                    <a class="block w-full py-4 px-2 hover:bg-slate-400 text-2xl font-bold text-slate-50 transition-all" href="/">
+                        Event Timer
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="flex-1 overflow-hidden">
+            <div class="flex h-full">
+                <div class="w-48 bg-slate-600">
+	
+                </div>
+                <div class="flex-1 p-8 bg-slate-100">
+                    <div class="shadow p-2 text-center bg-white">
+                        <h1 class="text-4xl">Event timer</h1>
+                        <p
+                            class="text-8xl text-slate-600"
+                            id="countdown">
+                            Loading..
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="bg-slate-400">
+            <p class="text-center text-xs py-2 text-white">Built by <a class="hover:text-cyan-200 transition-colors" href="https://github.com/dayvidwhy">dayvidwhy</a></p>
+        </footer>
+    </div>
 </Layout>
 
+<script>
+import { formatDistanceToNow } from "date-fns";
+const countdown = document.getElementById("countdown");
+const eventDate = new Date("2025-01-01 00:00:00").getTime();
+setInterval(() => {
+    if (countdown) {
+        countdown.innerHTML = formatDistanceToNow(eventDate, { includeSeconds: true });
+    }
+}, 1000);
+</script>
