@@ -1,0 +1,36 @@
+---
+const routes = [
+    {
+        path: "/",
+        label: "Home"
+    }
+];
+
+const activeRoute = Astro.url.pathname;
+---
+<nav class="w-full bg-slate-300 flex">
+    <ul class="w-48 flex bg-slate-800">
+        <li class="w-full text-center">
+            <a class="block w-full py-4 px-2 hover:bg-slate-400 text-2xl font-bold text-slate-50 transition-all" href="/">
+                Event Timer
+            </a>
+        </li>
+    </ul>
+    <ul class="h-full">
+        {routes.map(route => (
+            <li class="w-full h-full text-center">
+                <a 
+                    class={`
+                        h-full w-full flex align-middle justify-center px-4 border-b-2 
+                        ${activeRoute === route.path ? "border-slate-500" : "border-slate-300"}
+                        hover:border-slate-800 text-sm text-slate-700 font-bold transition-all
+                    `}
+                    href={route.path}>
+                    <span class="block my-auto">
+                        {route.label}
+                    </span>
+                </a>
+            </li>
+        ))}
+    </ul>
+</nav>
