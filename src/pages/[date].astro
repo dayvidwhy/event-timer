@@ -9,7 +9,7 @@ const { date } = Astro.params;
         <div class="shadow p-2 text-center bg-white">
             <h1 class="text-4xl">Event timer</h1>
             <p
-                class="text-4xl text-slate-600"
+                class="text-4xl text-slate-600 my-4"
                 id="countdown"
                 data-time-until={date}>
                 Loading..
@@ -30,7 +30,13 @@ const { date } = Astro.params;
     if (!eventParam) throw new Error("No event date provided.");
 
     // start the countdowm
-    const eventDate = new Date(eventParam).getTime();
+    let eventDate;
+    try {
+        eventDate = new Date(eventParam).getTime();
+    } catch (e) {
+        throw new Error("Invalid date provided.");
+    }
+
     setInterval(() => {
         const now = new Date().getTime();
         const distance = eventDate - now;

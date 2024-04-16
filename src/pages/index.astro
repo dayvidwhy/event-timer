@@ -4,13 +4,40 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout title="Event timer.">
     <div class="p-8">
-        <div class="shadow p-2 text-center bg-white">
-            <h1 class="text-4xl">Event timer</h1>
-            <p
-                class="text-4xl text-slate-600"
-                id="countdown">
-                Loading..
-            </p>
+        <div class="shadow p-4 bg-white">
+            <h1 class="text-4xl text-slate-600 font-bold">Set the time</h1>
+            <form class="w-1/2 p-4">
+                <div class="flex w-full">
+                    <div class="w-1/2 mr-1">
+                        <label for="event-date" class="block mt-4">Event date</label>
+                        <input type="date" id="event-date" name="event-date" class="border border-gray-300 p-2 w-full" required>
+                    </div>
+                    <div class="w-1/2 ml-1">
+                        <label for="event-time" class="block mt-4">Event time</label>
+                        <input type="time" id="event-time" name="event-time" class="border border-gray-300 p-2 w-full" required>
+                    </div>
+                </div>
+                <button type="submit" class="bg-slate-500 hover:bg-slate-200 text-white hover:text-slate-600 transition p-2 mt-4 w-full">Start countdown</button>
+            </form>
         </div>
     </div>
 </Layout>
+
+<script>
+const form: HTMLFormElement | null = document.querySelector("form");
+const dateInput: HTMLInputElement | null = document.querySelector("#event-date");
+const timeInput: HTMLInputElement | null = document.querySelector("#event-time");
+
+if (!form || !dateInput || !timeInput) {
+    throw new Error("Form or input not found.");
+}
+
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const date = dateInput.value;
+    const time = timeInput.value;
+    const eventDate = new Date(`${date}T${time}`);
+    const isoDate = eventDate.toISOString();
+    window.location.href = "/" + isoDate;
+});
+</script>
